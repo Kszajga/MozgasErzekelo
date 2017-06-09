@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "59150394734",
+    "firebase_url": "https://mozgaserzekelo-98d28.firebaseio.com",
+    "project_id": "mozgaserzekelo-98d28",
+    "storage_bucket": "mozgaserzekelo-98d28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59150394734:android:11706d547ce16e57",
+        "android_client_info": {
+          "package_name": "com.kszajgapp.mozgaserzekelo.mozgaserzekelo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59150394734-82iklj235jbb2u5hr1gaouirggbg8nej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFEEjlnqWUlXNGCNCBQq1GtT6zUBBkAsM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

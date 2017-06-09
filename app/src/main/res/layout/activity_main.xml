@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kszajgapp.mozgaserzekelo.mozgaserzekelo.MainActivity">
+
+    <TableLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Switch
+                android:id="@+id/switch_Subscribe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Subscribe"
+                tools:layout_editor_absoluteX="81dp"
+                tools:layout_editor_absoluteY="129dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_show_token"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tbtn_PIRSensor"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:text="Show Token"
+                tools:layout_editor_absoluteX="136dp"
+                tools:layout_editor_absoluteY="76dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ToggleButton
+                android:id="@+id/tbtn_PIRSensor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="PIRSensor"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="77dp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>
