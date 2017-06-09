@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private DatabaseReference mDatabase;
-    public Sensor pir = new Sensor();
+    public Sensor sensor = new Sensor();
 
     //Get the token
     String token = FirebaseInstanceId.getInstance().getToken();
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.addValueEventListener(PIRSensorListener);
+        mDatabase.addValueEventListener(TokenListener);
         //mDatabase.addListenerForSingleValueEvent(PIRSensorListener);
 
         Button btnShowToken = (Button)findViewById(R.id.btn_show_token);
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         tbtnPIRSensor.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(pir.PIRSensor){
+                if(sensor.PIRSensor){
                     setPIRSensor(false);
                     Log.d(TAG, "FALSE-RA ALLITAS!");
                     tbtnPIRSensor.setChecked(false);
@@ -62,19 +64,46 @@ public class MainActivity extends AppCompatActivity {
                     tbtnPIRSensor.setChecked(true);
                 }
 
-                Log.d(TAG, "PIRSensor value changed: " + pir.PIRSensor);
-                Toast.makeText(MainActivity.this, "PIR Sensor value changed: " + pir.PIRSensor, Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "PIRSensor value changed: " + sensor.PIRSensor);
+                Toast.makeText(MainActivity.this, "PIR Sensor value changed: " + !sensor.PIRSensor, Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        swSubscribe.setOnClickListener(new View.OnClickListener(){
+        swSubscribe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    setSubscribe(token);
+                    Log.d(TAG, "Subscribe érték a Sensor-ban: " + sensor.subscribe);
+                    //swSubscribe.setChecked(false);
+                    Log.d(TAG, "Subscribe feliratkozás");
+                }
+                else {
+                    setSubscribe("");
+                    //swSubscribe.setChecked(true);
+                    Log.d(TAG, "Subscribe leiratkozás");
+                }
+            }
+        });
+
+        /*swSubscribe.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "Subscribe esemény");
-                setSubscribe(token);
+                if(sensor.subscribe != "" || sensor.subscribe != null){
+                    setSubscribe("");
+                    swSubscribe.setChecked(false);
+                    Log.d(TAG, "Subscribe leiratkozás");
+                }
+                else {
+                    setSubscribe(token);
+                    swSubscribe.setChecked(true);
+                    Log.d(TAG, "Subscribe feliratkozás");
+                }
+
+
             }
-        });
+        });*/
     }
 
     public void setPIRSensor(boolean PIRValue) {
@@ -83,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setSubscribe(String token){
-        mDatabase.child("token").setValue(token);
+        mDatabase.child("subscribe").setValue(token);
     }
 
     public void setSubscribeSwitch(boolean val){
@@ -103,8 +132,11 @@ public class MainActivity extends AppCompatActivity {
     ValueEventListener TokenListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            token = dataSnapshot.getValue().toString();
-            if(token != ""){
+            sensor = dataSnapshot.getValue(Sensor.class);
+            Log.d(TAG, "SUBSCRIBE ÉRTÉKE: " + sensor.subscribe);
+
+            if(!sensor.subscribe.equals("") || !sensor.subscribe.equals(null)){
+                Log.d(TAG, "SUBSCRIBE ÉRTÉKE: " + sensor.subscribe);
                 setSubscribeSwitch(true);
             }
             else{
@@ -114,16 +146,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-
+            Log.d(TAG, "Firebase Error: " + databaseError.getDetails());
         }
     };
 
     ValueEventListener PIRSensorListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            pir = dataSnapshot.getValue(Sensor.class);
-            Log.d(TAG, "From FIREBASE PIRSensor Value: " + pir.PIRSensor);
-            setButton(pir.PIRSensor);
+            sensor = dataSnapshot.getValue(Sensor.class);
+            Log.d(TAG, "From FIREBASE PIRSensor Value: " + sensor.PIRSensor);
+            setButton(sensor.PIRSensor);
         }
 
         @Override

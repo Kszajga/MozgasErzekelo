@@ -8,10 +8,12 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Sensor {
     public boolean PIRSensor;
+    public String subscribe;
 
     public Sensor(){}
 
-    public Sensor(boolean PIRSensor){
+    public Sensor(boolean PIRSensor, String subscribe){
         this.PIRSensor = PIRSensor;
+        this.subscribe = subscribe;
     }
 }
