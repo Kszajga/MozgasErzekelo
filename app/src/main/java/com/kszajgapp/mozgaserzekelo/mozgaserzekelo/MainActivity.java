@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             sensor = dataSnapshot.getValue(Sensor.class);
             Log.d(TAG, "SUBSCRIBE ÉRTÉKE: " + sensor.subscribe);
 
-            if(!sensor.subscribe.equals("") || !sensor.subscribe.equals(null)){
+            if(token.equals(sensor.subscribe)){
                 Log.d(TAG, "SUBSCRIBE ÉRTÉKE: " + sensor.subscribe);
                 setSubscribeSwitch(true);
             }

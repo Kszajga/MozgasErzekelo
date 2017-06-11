@@ -21,7 +21,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d(TAG, "FROM: " + remoteMessage.getFrom());
+        Log.d(TAG, "Message FROM: " + remoteMessage.getFrom());
 
         //C
         if(remoteMessage.getData().size() > 0){
@@ -44,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri notificationSound = RingtoneManager.getDefaultUri((RingtoneManager.TYPE_NOTIFICATION));
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Firebase Cloud Messaging")
+                .setContentTitle("Mozgásérzékelő")
                 .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(notificationSound)
