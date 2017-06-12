@@ -5,12 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,11 +22,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private DatabaseReference mDatabase;
     public Sensor sensor = new Sensor();
+    private ListView mListView;
 
     //Get the token
     String token = FirebaseInstanceId.getInstance().getToken();
@@ -38,7 +50,26 @@ public class MainActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.addValueEventListener(PIRSensorListener);
         mDatabase.addValueEventListener(TokenListener);
-        //mDatabase.addListenerForSingleValueEvent(PIRSensorListener);
+        mDatabase.addValueEventListener(LogListener);
+
+        DatabaseReference logRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://mozgaserzekelo-98d28.firebaseio.com/logs");
+        mListView = (ListView) findViewById(R.id.logitems);
+        //Adatlista elkészítése
+        FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(
+                this,
+                String.class,
+                android.R.layout.simple_list_item_1,
+                logRef
+        ){
+            @Override
+            protected void populateView(View v, String model, int position) {
+                TextView textView = (TextView) v.findViewById(android.R.id.text1);
+                Log.d(TAG, "LISTADAPTER " + model);
+                textView.setText(model);
+            }
+        };
+
+        mListView.setAdapter(firebaseListAdapter);
 
         Button btnShowToken = (Button)findViewById(R.id.btn_show_token);
         btnShowToken.setOnClickListener(new View.OnClickListener(){
@@ -87,23 +118,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*swSubscribe.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(sensor.subscribe != "" || sensor.subscribe != null){
-                    setSubscribe("");
-                    swSubscribe.setChecked(false);
-                    Log.d(TAG, "Subscribe leiratkozás");
-                }
-                else {
-                    setSubscribe(token);
-                    swSubscribe.setChecked(true);
-                    Log.d(TAG, "Subscribe feliratkozás");
-                }
-
-
-            }
-        });*/
     }
 
     public void setPIRSensor(boolean PIRValue) {
@@ -161,6 +175,25 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCancelled(DatabaseError databaseError) {
             Log.d(TAG, "Firebase Error: " + databaseError.getDetails());
+        }
+    };
+
+    ValueEventListener LogListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            sensor = dataSnapshot.getValue(Sensor.class);
+            Log.d(TAG, "LOGOLÁS FIREBASEBŐL");
+
+            //Egyenkénti kilistázása a log bejegyzéseknek
+            for (Map.Entry<String, String> entry : sensor.logs.entrySet())
+            {
+                //Log.d(TAG,(entry.getKey() + "/" + entry.getValue()));
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
         }
     };
 }
