@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MozgasErzekelo</string>
+    <string name="feliratkozas">Feliratkozás jelzésre</string>
+    <string name="szenzorallapot">Szenzor állapota</string>
+    <string name="tokenerteke">Token értéke</string>
+    <string name="deletelogs">Log törlése</string>
 </resources>

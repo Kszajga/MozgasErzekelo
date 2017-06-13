@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="filter_logs_array">
+        <item>Tegnap</item>
+        <item>Tegnapelőtt</item>
+        <item>Ez a hét</item>
+        <item>Előző hét</item>
+        <item>Hónap</item>
+        <item>Összes</item>
+    </string-array>
+</resources>

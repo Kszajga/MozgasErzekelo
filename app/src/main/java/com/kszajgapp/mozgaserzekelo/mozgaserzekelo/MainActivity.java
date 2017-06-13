@@ -1,14 +1,15 @@
 package com.kszajgapp.mozgaserzekelo.mozgaserzekelo;
 
-import android.support.v7.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,11 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.lang.reflect.Array;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         final ToggleButton tbtnPIRSensor = (ToggleButton) findViewById(R.id.tbtn_PIRSensor);
         final Switch swSubscribe = (Switch) findViewById(R.id.switch_Subscribe);
+        final Button btn_deletelogs = (Button) findViewById(R.id.btn_delete_logs);
+        final Button btnShowToken = (Button) findViewById(R.id.btn_show_token);
+        final Spinner spinner_filter_logs  = (Spinner) findViewById(R.id.spinner_filter_logs);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.addValueEventListener(PIRSensorListener);
@@ -71,11 +70,27 @@ public class MainActivity extends AppCompatActivity {
 
         mListView.setAdapter(firebaseListAdapter);
 
-        Button btnShowToken = (Button)findViewById(R.id.btn_show_token);
+        //Log szűréshez Spinner filter_logs_adapter és feltöltése
+        ArrayAdapter<CharSequence> filter_logs_adapter = ArrayAdapter.createFromResource(this,
+                R.array.filter_logs_array, android.R.layout.simple_spinner_item);
+        filter_logs_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_filter_logs.setAdapter(filter_logs_adapter);
+        LogFilterOnItemSelectedListener l = new LogFilterOnItemSelectedListener();
+        spinner_filter_logs.setOnItemSelectedListener(l);
+
+        //Log törlése gomb funkció
+        btn_deletelogs.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "LOG TÖRLÉSE");
+                mDatabase.child("logs").removeValue();
+            }
+        });
+
+
         btnShowToken.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
                 Log.d(TAG, "Token: " + token);
                 Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
             }
