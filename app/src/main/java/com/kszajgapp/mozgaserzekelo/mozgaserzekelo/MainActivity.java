@@ -1,6 +1,8 @@
 package com.kszajgapp.mozgaserzekelo.mozgaserzekelo;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +25,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+import java.text.SimpleDateFormat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(model);
             }
         };
-
         mListView.setAdapter(firebaseListAdapter);
 
         //Log szűréshez Spinner filter_logs_adapter és feltöltése
