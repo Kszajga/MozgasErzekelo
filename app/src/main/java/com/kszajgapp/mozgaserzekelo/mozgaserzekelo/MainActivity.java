@@ -1,8 +1,10 @@
 package com.kszajgapp.mozgaserzekelo.mozgaserzekelo;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnRegister;
     private EditText etEmail;
     private EditText etPassword;
+    private TextView tvLogin;
 
     private ProgressDialog progressDialog;
 
@@ -68,13 +71,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        if(firebaseAuth.getCurrentUser() != null){
+            //alredy signed in
+            //profile activity here
+            finish();
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+        }
+
         btnRegister = (Button) findViewById(R.id.btn_RegisterUser);
         etEmail = (EditText) findViewById(R.id.et_Email);
         etPassword = (EditText) findViewById(R.id.et_Password);
+        tvLogin = (TextView) findViewById(R.id.tv_Login);
 
         progressDialog = new ProgressDialog(this);
 
         btnRegister.setOnClickListener(this);
+        tvLogin.setOnClickListener(this);
 
     }
 
@@ -105,6 +117,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         progressDialog.hide();
                         if(task.isSuccessful()){
                             //regisztrálás OK
+
+                                //alredy signed in
+                                //profile activity here
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+
                             Toast.makeText(MainActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(MainActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
@@ -121,9 +139,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             registerUser();
         }
 
-        /*if(view == tvSignIn){
+        if(view == tvLogin){
             //Login lesz
-        }*/
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
 
 }

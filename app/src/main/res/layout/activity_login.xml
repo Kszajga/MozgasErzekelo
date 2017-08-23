@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kszajgapp.mozgaserzekelo.mozgaserzekelo.LoginActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <EditText
+            android:id="@+id/et_Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Adja meg email címét..." />
+
+        <EditText
+            android:id="@+id/et_Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_Email"
+            android:inputType="textPassword"
+            android:hint="Adja meg jelszavát..." />
+
+        <Button
+            android:id="@+id/btn_SignIn"
+            android:text="Belépés"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_Password" />
+
+        <TextView
+            android:id="@+id/tvSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nincs fiókja? Regisztráljon itt!" />
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
