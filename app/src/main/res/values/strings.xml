@@ -1,7 +1,14 @@
 <resources>
-    <string name="app_name">MozgasErzekelo</string>
+    <string name="app_name">MySensors</string>
     <string name="feliratkozas">Feliratkozás jelzésre</string>
     <string name="szenzorallapot">Szenzor állapota</string>
     <string name="tokenerteke">Token értéke</string>
     <string name="deletelogs">Log törlése</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_head_menu">HeadMenuActivity</string>
 </resources>

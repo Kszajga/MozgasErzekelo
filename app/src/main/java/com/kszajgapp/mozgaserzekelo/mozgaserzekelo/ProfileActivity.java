@@ -30,6 +30,7 @@ import java.util.Map;
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnLogout;
+    private Button btnMasik;
 
     private static final String TAG = "MainActivity";
     private DatabaseReference mDatabase;
@@ -61,6 +62,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         final Switch swSubscribe = (Switch) findViewById(R.id.switch_Subscribe);
         final Button btn_deletelogs = (Button) findViewById(R.id.btn_delete_logs);
         final Button btnShowToken = (Button) findViewById(R.id.btn_show_token);
+        final Button btnMasik = (Button) findViewById(R.id.btn_Masik);
         final Spinner spinner_filter_logs  = (Spinner) findViewById(R.id.spinner_filter_logs);
         btnLogout = (Button) findViewById(R.id.btn_Logout);
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -104,6 +106,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         btnLogout.setOnClickListener(this);
+
+        btnMasik.setOnClickListener(this);
 
 
         btnShowToken.setOnClickListener(new View.OnClickListener(){
