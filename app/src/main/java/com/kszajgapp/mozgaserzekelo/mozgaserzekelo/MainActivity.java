@@ -2,29 +2,18 @@ package com.kszajgapp.mozgaserzekelo.mozgaserzekelo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,19 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
-
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.text.SimpleDateFormat;
+import com.kszajgapp.mozgaserzekelo.mozgaserzekelo.model.Sensor;
+import com.kszajgapp.mozgaserzekelo.mozgaserzekelo.model.User;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
-    private DatabaseReference mDatabase;
+    private DatabaseReference userDatabaseReference;
     public Sensor sensor = new Sensor();
     private ListView mListView;
 
@@ -69,21 +52,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        if(firebaseAuth.getCurrentUser() != null){
-            //alredy signed in
-            //profile activity here
-            finish();
-            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-        }
-
+        // UI
         btnRegister = (Button) findViewById(R.id.btn_RegisterUser);
         etEmail = (EditText) findViewById(R.id.et_Email);
         etPassword = (EditText) findViewById(R.id.et_Password);
         tvLogin = (TextView) findViewById(R.id.tv_Login);
 
+        // Firebase settings
+        firebaseAuth = FirebaseAuth.getInstance();
+        userDatabaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://mozgaserzekelo-98d28.firebaseio.com/users");
+
+        // If user already signed in, show profile
+        if(firebaseAuth.getCurrentUser() != null){
+            finish();
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+        }
+
+        //Events and listeners
         progressDialog = new ProgressDialog(this);
+        userDatabaseReference.addValueEventListener(userListener);
 
         btnRegister.setOnClickListener(this);
         tvLogin.setOnClickListener(this);
@@ -92,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void registerUser(){
-        String email = etEmail.getText().toString().trim();
+        final String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){
@@ -114,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        String key = userDatabaseReference.push().getKey();
+                        userDatabaseReference.child(key).setValue(email);
+                        Log.d(TAG, "User keyID: " + key);
                         progressDialog.hide();
                         if(task.isSuccessful()){
                             //regisztrálás OK
@@ -144,5 +134,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
+
+    ValueEventListener userListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+//            User user = dataSnapshot.getValue(User.class);
+//            Log.d(TAG, user.email);
+//            Log.d(TAG, user.devices.toString());
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
 }

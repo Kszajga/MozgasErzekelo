@@ -91,18 +91,17 @@
 
     <ListView
         android:id="@+id/logitems"
-        android:layout_width="370dp"
-        android:layout_height="0dp"
+        android:layout_width="344dp"
+        android:layout_height="219dp"
         android:layout_below="@+id/btn_show_token"
-        android:layout_marginBottom="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/btn_delete_logs"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.148" />
 
     <Button
         android:id="@+id/btn_Masik"
@@ -111,6 +110,16 @@
         android:layout_marginTop="8dp"
         android:text="Sajt"
         app:layout_constraintTop_toBottomOf="@+id/btn_Logout"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/btn_NewDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Új"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
 

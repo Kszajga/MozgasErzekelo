@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.kszajgapp.mozgaserzekelo.mozgaserzekelo.model.Sensor;
 
 import java.util.Map;
 
@@ -31,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private Button btnLogout;
     private Button btnMasik;
+    private Button btnNewDevice;
 
     private static final String TAG = "MainActivity";
     private DatabaseReference mDatabase;
@@ -49,8 +51,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Firebase settings
         firebaseAuth = FirebaseAuth.getInstance();
-
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         if(firebaseAuth.getCurrentUser() == null){
             finish();
             startActivity(new Intent(this, LoginActivity.class));
@@ -58,14 +61,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
+        // UI
         final ToggleButton tbtnPIRSensor = (ToggleButton) findViewById(R.id.tbtn_PIRSensor);
-        final Switch swSubscribe = (Switch) findViewById(R.id.switch_Subscribe);
-        final Button btn_deletelogs = (Button) findViewById(R.id.btn_delete_logs);
-        final Button btnShowToken = (Button) findViewById(R.id.btn_show_token);
-        final Button btnMasik = (Button) findViewById(R.id.btn_Masik);
-        final Spinner spinner_filter_logs  = (Spinner) findViewById(R.id.spinner_filter_logs);
+        Switch swSubscribe = (Switch) findViewById(R.id.switch_Subscribe);
+        Button btn_deletelogs = (Button) findViewById(R.id.btn_delete_logs);
+        Button btnShowToken = (Button) findViewById(R.id.btn_show_token);
+        btnMasik = (Button) findViewById(R.id.btn_Masik);
+        Spinner spinner_filter_logs  = (Spinner) findViewById(R.id.spinner_filter_logs);
         btnLogout = (Button) findViewById(R.id.btn_Logout);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        btnNewDevice = (Button) findViewById(R.id.btn_NewDevice);
+
+        // Events, listeners
         mDatabase.addValueEventListener(PIRSensorListener);
         mDatabase.addValueEventListener(TokenListener);
         mDatabase.addValueEventListener(LogListener);
@@ -106,9 +112,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         btnLogout.setOnClickListener(this);
-
         btnMasik.setOnClickListener(this);
-
+        btnNewDevice.setOnClickListener(this);
 
         btnShowToken.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -242,6 +247,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             firebaseAuth.signOut();
             finish();
             startActivity(new Intent(this, LoginActivity.class));
+        }
+
+        if(v == btnMasik){
+            finish();
+            startActivity(new Intent(this, SensorsActivity.class));
+        }
+
+        if(v == btnNewDevice){
+
         }
     }
 }
