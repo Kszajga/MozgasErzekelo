@@ -47,11 +47,15 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ProfileActivity2" />
         <activity
             android:name=".SensorsActivity"
             android:label="@string/title_activity_sensors"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserProfile"
+            android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

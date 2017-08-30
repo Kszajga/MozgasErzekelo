@@ -28,7 +28,7 @@ import com.kszajgapp.mozgaserzekelo.mozgaserzekelo.model.Sensor;
 
 import java.util.Map;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfileActivity2 extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnLogout;
     private Button btnMasik;
@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         mDatabase = FirebaseDatabase.getInstance().getReference();
         if(firebaseAuth.getCurrentUser() == null){
             finish();
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, RegisterActivity.class));
         }
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -119,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View v){
                 Log.d(TAG, "Token: " + token);
-                Toast.makeText(ProfileActivity.this, token, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity2.this, token, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -138,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 }
 
                 Log.d(TAG, "PIRSensor value changed: " + sensor.PIRSensor);
-                Toast.makeText(ProfileActivity.this, "PIR Sensor value changed: " + !sensor.PIRSensor, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity2.this, "PIR Sensor value changed: " + !sensor.PIRSensor, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -246,12 +246,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if(v == btnLogout){
             firebaseAuth.signOut();
             finish();
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
         }
 
         if(v == btnMasik){
             finish();
-            startActivity(new Intent(this, SensorsActivity.class));
+            startActivity(new Intent(this, UserProfile.class));
         }
 
         if(v == btnNewDevice){
