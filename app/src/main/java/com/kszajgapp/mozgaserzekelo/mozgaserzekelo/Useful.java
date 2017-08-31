@@ -35,7 +35,9 @@ public class Useful {
 
         if (fragment != null) {
             FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.FragmentLayout, fragment).commit();
+            ft.replace(R.id.FragmentLayout, fragment);
+            ft.addToBackStack(activity.toString());
+            ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
