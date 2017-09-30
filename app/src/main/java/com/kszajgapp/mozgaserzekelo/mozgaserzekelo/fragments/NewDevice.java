@@ -20,7 +20,7 @@ import com.kszajgapp.mozgaserzekelo.mozgaserzekelo.UserProfile;
 
 import com.kszajgapp.mozgaserzekelo.mozgaserzekelo.R;
 
-public class NewDevice extends Fragment {
+public class NewDevice extends Fragment implements View.OnClickListener{
     private static final String TAG = "NewDevice";
 
     private Button btn_Add;
@@ -40,6 +40,7 @@ public class NewDevice extends Fragment {
         Button btn_Add = (Button) view.findViewById(R.id.btn_Add);
         final Button btn_Cancel = (Button) view.findViewById(R.id.btn_Cancel);
 
+
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,6 +48,21 @@ public class NewDevice extends Fragment {
                 Useful.SetFragment(R.id.btn_Cancel, getActivity());
             }
         });
+
+
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_Add:
+                //TODO
+                //Add new device to Firebase Database
+                break;
+            case R.id.btn_Cancel:
+                //TODO
+                //NewDevice Cancel Button Delete Form
+                break;
+        }
+    }
 }

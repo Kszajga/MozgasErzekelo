@@ -18,6 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.kszajgapp.mozgaserzekelo.mozgaserzekelo.fragments.Devices;
 import com.kszajgapp.mozgaserzekelo.mozgaserzekelo.R;
 import com.kszajgapp.mozgaserzekelo.mozgaserzekelo.fragments.NewDevice;
@@ -26,6 +28,10 @@ public class UserProfile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "UserProfile";
+
+    //Firebase settings and variables
+    FirebaseDatabase fbDb = FirebaseDatabase.getInstance();
+    DatabaseReference fbDevices = fbDb.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
